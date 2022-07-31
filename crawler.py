@@ -6,7 +6,7 @@ from random import randint
 from bs4 import BeautifulSoup
 
 
-# url = 'https://pureportal.coventry.ac.uk/en/organisations/school-of-economics-finance-and-accounting/publications/?page ='
+url = 'https://pureportal.coventry.ac.uk/en/organisations/school-of-economics-finance-and-accounting/publications/?page ='
 pages = np.arange(1, 14, 1)
 
 publications = []
