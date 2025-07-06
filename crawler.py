@@ -1,13 +1,12 @@
 import json
 import requests
-import numpy as np
 from time import sleep
 from random import randint
 from bs4 import BeautifulSoup
 
 
 url = 'https://pureportal.coventry.ac.uk/en/organisations/school-of-economics-finance-and-accounting/publications/?page ='
-pages = np.arange(1, 14, 1)
+pages = range(1, 14, 1)
 
 publications = []
 for page in pages:
@@ -15,7 +14,7 @@ for page in pages:
     web_page = requests.get(_url)
     sleep(randint(5, 15))
     soup = BeautifulSoup(web_page.content, "html.parser")
-    documents = soup.findAll("div", {"class" : "rendering rendering_researchoutput rendering_researchoutput_portal-short rendering_contributiontojournal rendering_portal-short rendering_contributiontojournal_portal-short"})
+    documents = soup.find_all("div", {"class" : "rendering rendering_researchoutput rendering_researchoutput_portal-short rendering_contributiontojournal rendering_portal-short rendering_contributiontojournal_portal-short"})
 
 
     for doc in documents:

@@ -1,4 +1,47 @@
-__pycache__
-venv
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
 env/
-*.docx
+venv/
+.vertical_search_engine/
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ipynb_checkpoints/
+
+# Flask
+instance/
+.flaskenv
+
+# Database
+*.db
+*.sqlite
+*.sqlite3
+
+# Environment variables
+.env
+.flaskenv # Redundant if already covered by Flask section, but good to be explicit
+
+# Logs
+*.log
+logs/
+
+# OS generated files
+.DS_Store
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# IDE specific files
+.idea/             # PyCharm
+.vscode/           # VS Code
+*.sublime-project
+*.sublime-workspace
+
+# Build artifacts
+dist/
+build/
+*.egg
