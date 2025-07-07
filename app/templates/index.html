@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+
+{% block title %}Search Publications{% endblock %}
+
+{% block content %}
+<div class="max-w-3xl mx-auto bg-white p-6 md:p-8 rounded-lg shadow-xl border border-gray-200">
+    <h2 class="text-3xl font-semibold text-center text-gray-800 mb-6">Search Publications</h2>
+
+    <form action="/" method="GET" class="flex flex-col md:flex-row gap-4 mb-8">
+        <input type="text" name="query" placeholder="Enter keywords (e.g., 'economics', 'finance', 'market')"
+               class="flex-grow px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-lg shadow-sm"
+               value="{{ query if query else '' }}">
+        <button type="submit"
+                class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-md font-medium text-lg transition duration-300 ease-in-out transform hover:scale-105 shadow-md">
+            Search
+        </button>
+    </form>
+
+    {% if error_message %}
+    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-6" role="alert">
+        <strong class="font-bold">Error!</strong>
+        <span class="block sm:inline">{{ error_message }}</span>
+    </div>
+    {% endif %}
+
+    <div class="publication-results">
+        {% if publications %}
+            <h3 class="text-2xl font-semibold text-gray-700 mb-5">
+                {% if query %}
+                    Search Results for "{{ query }}"
+                {% else %}
+                    Recent Publications
+                {% endif %}
+            </h3>
+            <div class="space-y-6">
+                {% for pub in publications %}
+                <div class="bg-gray-50 p-5 rounded-lg shadow-sm border border-gray-100 hover:shadow-md transition-shadow duration-200">
+                    <h4 class="text-xl font-semibold text-blue-700 mb-2">
+                        <a href="{{ pub.publication_link }}" target="_blank" rel="noopener noreferrer"
+                           class="hover:underline">{{ pub.title }}</a>
+                    </h4>
+                    <p class="text-gray-600 text-sm mb-2">
+                        Authors:
+                        {% for author in pub.authors %}
+                            <a href="{{ author.author_link }}" target="_blank" rel="noopener noreferrer"
+                               class="text-blue-500 hover:underline">{{ author.name }}</a>{% if not loop.last %}, {% endif %}
+                        {% else %}
+                            <span class="text-gray-500">N/A</span>
+                        {% endfor %}
+                    </p>
+                    {% if pub.publication_year %}
+                    <p class="text-gray-500 text-sm mb-2">Publication Year: {{ pub.publication_year }}</p>
+                    {% endif %}
+                    {% if pub.abstract %}
+                    <p class="text-gray-700 text-base mt-2 line-clamp-3">{{ pub.abstract }}</p>
+                    {% endif %}
+                    <div class="mt-3 text-right">
+                        <a href="{{ pub.publication_link }}" target="_blank" rel="noopener noreferrer"
+                           class="text-blue-600 hover:text-blue-800 text-sm font-medium transition duration-200">
+                           Read More &rarr;
+                        </a>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        {% elif query and not error_message %}
+        <p class="text-center text-gray-600 text-lg">No publications found for "{{ query }}". Try a different query.</p>
+        {% elif not query and not error_message %}
+        <p class="text-center text-gray-600 text-lg">Enter a query above to search for publications.</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
